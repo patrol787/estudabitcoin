@@ -41,6 +41,14 @@
       <p>Este projeto nasce da convicção de que o acesso ao conhecimento é o primeiro passo para a liberdade individual. Num mundo de crescente complexidade tecnológica e financeira, o nosso objetivo é simplificar o caminho.</p>
       <p>Criámos um espaço de curadoria onde selecionamos o melhor material educativo sobre Bitcoin — desde conceitos fundamentais até dinâmicas interativas e jogos. Acreditamos que a educação deve ser acessível, clara e, acima de tudo, prática para quem deseja compreender a nova economia.</p>
     </section>
+
+    <div class="launch-block-wrap">
+      <p class="launch-block">[ Lançado durante o bloco #935020 ]</p>
+      <p class="live-block" id="live-block" aria-live="polite">
+        <span class="live-block-label">Bloco atual:</span>
+        <span class="live-block-number" id="live-block-number">…</span>
+      </p>
+    </div>
   </main>
 
   <footer class="site-footer" role="contentinfo">
@@ -60,6 +68,28 @@
           toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
         });
       }
+
+      // Contador em tempo real do bloco Bitcoin (~10 min)
+      var el = document.getElementById('live-block-number');
+      var UPDATE_MS = 10 * 60 * 1000;
+      var apis = [
+        'https://mempool.space/api/blocks/tip',
+        'https://blockstream.info/api/blocks/tip'
+      ];
+      function setHeight(height) {
+        if (el && typeof height === 'number') el.textContent = '#' + height.toLocaleString('pt-PT');
+        else if (el) el.textContent = '—';
+      }
+      function tryNext(i) {
+        if (i >= apis.length) { setHeight(null); return; }
+        fetch(apis[i]).then(function(r) { return r.json(); }).then(function(d) {
+          var h = d && (d.height != null) ? Number(d.height) : NaN;
+          if (!isNaN(h)) setHeight(h); else tryNext(i + 1);
+        }).catch(function() { tryNext(i + 1); });
+      }
+      function updateBlock() { tryNext(0); }
+      updateBlock();
+      setInterval(updateBlock, UPDATE_MS);
     })();
   </script>
 </body>

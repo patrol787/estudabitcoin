@@ -296,6 +296,34 @@ main {
   margin-bottom: 0;
 }
 
+.launch-block-wrap {
+  text-align: center;
+  margin: 4rem 0 2rem;
+}
+
+.launch-block {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem;
+}
+
+.live-block {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.live-block-label {
+  margin-right: 0.35em;
+}
+
+.live-block-number {
+  color: var(--bitcoin-orange);
+  font-weight: 600;
+}
+
 /* ----- Credits & Disclaimer (aprende page) ----- */
 .credits-disclaimer {
   margin-top: 3rem;
