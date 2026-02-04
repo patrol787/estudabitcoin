@@ -37,25 +37,6 @@
         <span class="game-thumbnail-title">Bitcoin Quiz</span>
         <span class="game-thumbnail-cta">Clica para abrir</span>
       </a>
-      <div class="game-card" id="game-card-local">
-        <p class="game-card-desc">Testa o teu conhecimento sobre Bitcoin com o quiz educativo.</p>
-        <p class="game-steps"><strong>Para jogar em desenvolvimento local:</strong></p>
-        <ol class="game-steps-list">
-          <li>Inicia <strong>start-game.command</strong> (duplo-clique na pasta do site) e espera aparecer no Terminal: <code>Local: http://127.0.0.1:3001/</code></li>
-          <li>Clica num dos links abaixo (o jogo abre numa nova aba):</li>
-        </ol>
-        <p class="game-links">
-          <a href="http://localhost:3001" target="_blank" rel="noopener noreferrer" class="btn btn-primary game-btn">Abrir jogo (localhost:3001)</a>
-          <a href="http://127.0.0.1:3001" target="_blank" rel="noopener noreferrer" class="btn btn-outline game-btn">Abrir jogo (127.0.0.1:3001)</a>
-        </p>
-        <p class="game-note">Se o jogo não abrir, o start-game.command não está a correr. Abre-o primeiro.</p>
-      </div>
-      <div class="game-card" id="game-card-prod" style="display:none;">
-        <p class="game-card-desc">Testa o teu conhecimento sobre Bitcoin com o quiz educativo.</p>
-        <p class="game-thumbnail-wrap"><img src="jogo/assets/bitcoin-coin.png" alt="Bitcoin Quiz" class="game-thumbnail"></p>
-        <a href="jogo/index.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary game-btn">Jogar Bitcoin Quiz</a>
-        <p class="game-note">O jogo abre numa nova aba. Quando terminares, fecha a aba ou volta ao separador do site.</p>
-      </div>
     </section>
   </main>
 
@@ -76,22 +57,11 @@
           toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
         });
       }
-      // Em desenvolvimento local: mostramos instruções e links diretos para :3001; o thumbnail abre o jogo na mesma URL
-      var cardLocal = document.getElementById('game-card-local');
-      var cardProd = document.getElementById('game-card-prod');
+      // Em desenvolvimento local: o thumbnail abre o jogo em :3001; em produção abre jogo/index.html
       var thumbLink = document.getElementById('game-thumbnail-link');
       var isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
       if (thumbLink && isLocal) {
         thumbLink.href = 'http://' + window.location.hostname + ':3001';
-      }
-      if (cardLocal && cardProd) {
-        if (isLocal) {
-          cardLocal.style.display = 'block';
-          cardProd.style.display = 'none';
-        } else {
-          cardLocal.style.display = 'none';
-          cardProd.style.display = 'block';
-        }
       }
     })();
   </script>
