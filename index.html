@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Iniciativa educativa sobre Bitcoin, focada em privacidade. Aprende, explora e joga.">
+  <title>Início | Estuda Bitcoin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar para o conteúdo</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">Estuda<span>Bitcoin</span></a>
+      <button type="button" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-main">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="nav-main" role="navigation" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="index.html" aria-current="page">Início</a></li>
+          <li><a href="aprende.html">Aprende</a></li>
+          <li><a href="joga.html">Joga</a></li>
+          <li><a href="recursos.html">Recursos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" role="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-image-wrap">
+        <img src="hero-bitcoin.png" alt="Bitcoin Citadel - Visão futurista de uma comunidade Bitcoin sustentável" class="hero-image">
+      </div>
+      <h1 id="hero-heading">Bitcoin para todos</h1>
+      <p class="lead">Conteúdo curado e simplificado. Quebramos as barreiras à entrada no novo paradigma financeiro para que a tua exploração seja intuitiva e transformadora.</p>
+    </section>
+
+    <section class="section about-block" aria-labelledby="about-heading">
+      <h2 id="about-heading">Sobre o Projeto</h2>
+      <p>Este projeto nasce da convicção de que o acesso ao conhecimento é o primeiro passo para a liberdade individual. Num mundo de crescente complexidade tecnológica e financeira, o nosso objetivo é simplificar o caminho.</p>
+      <p>Criámos um espaço de curadoria onde selecionamos o melhor material educativo sobre Bitcoin — desde conceitos fundamentais até dinâmicas interativas e jogos. Acreditamos que a educação deve ser acessível, clara e, acima de tudo, prática para quem deseja compreender a nova economia.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-disclaimer"><strong>Privacidade.</strong> Este site não utiliza cookies nem scripts de rastreio. O alojamento é fornecido pelo GitHub, sujeito à sua política de privacidade.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      var toggle = document.querySelector('.nav-toggle');
+      var nav = document.querySelector('.nav-list');
+      if (toggle && nav) {
+        toggle.addEventListener('click', function() {
+          var open = nav.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', open);
+          toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

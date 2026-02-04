@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <base href="./" />
+    <link rel="icon" type="image/svg+xml" href="vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Bitcoin Quiz</title>
+    <script type="module" crossorigin src="/assets/game.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index.css">
+  </head>
+  <body>
+    <div id="root"><p style="padding:2rem;text-align:center;color:#F7931A;font-family:'Courier New',Consolas,monospace;">A carregar o jogo…</p></div>
+    <script>
+      window.addEventListener('error', function(e) {
+        var root = document.getElementById('root');
+        if (!root || root.getAttribute('data-error')) return;
+        root.setAttribute('data-error', '1');
+        var msg = e.message || 'erro desconhecido';
+        var src = (e.target && (e.target.src || e.target.href)) || e.filename || '';
+        if (src) msg += ' — Ficheiro: ' + src;
+        root.innerHTML = '<p style="padding:2rem;color:#f44;font-family:'Courier New',Consolas,monospace;word-break:break-all;">Erro: ' + msg + '</p><p style="padding:0 2rem;color:#888;font-size:0.9em;">Certifica-te de que abriste o site através de um servidor (ex.: npx serve) e não abrindo o ficheiro diretamente.</p>';
+      }, true);
+      setTimeout(function() {
+        var root = document.getElementById('root');
+        if (root && !root.getAttribute('data-error') && root.children.length === 1 && root.querySelector('p')) {
+          root.innerHTML = '<p style="padding:2rem;text-align:center;color:#F7931A;font-family:'Courier New',Consolas,monospace;">Ainda a carregar…</p><p style="padding:0 2rem;text-align:center;color:#aaa;font-size:0.95em;">Na primeira vez o Vite pode demorar. Espera mais um pouco ou abre a consola (F12) para ver erros.</p>';
+        }
+      }, 15000);
+      setTimeout(function() {
+        var root = document.getElementById('root');
+        if (root && !root.getAttribute('data-error') && root.children.length === 1 && root.querySelector('p')) {
+          root.innerHTML = '<p style="padding:2rem;text-align:center;color:#f44;font-family:'Courier New',Consolas,monospace;">O jogo não carregou.</p><p style="padding:0 2rem;text-align:center;color:#aaa;font-size:0.95em;">Abre a consola (F12) e diz qual o erro a vermelho. Recarrega (F5) para tentar de novo.</p>';
+        }
+      }, 35000);
+    </script>
+  </body>
+</html>

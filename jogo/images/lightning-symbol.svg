@@ -1,0 +1,65 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente para o c�rculo -->
+    <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F7931A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA64D;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente para o raio principal -->
+    <linearGradient id="lightningGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFA64D;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F7931A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E6820A;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Filtro para textura suave -->
+    <filter id="roughness">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2"/>
+    </filter>
+  </defs>
+  
+  <!-- C�rculo laranja grosso -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="url(#circleGradient)" stroke-width="10" stroke-linecap="round"/>
+  
+  <!-- Raio Lightning principal (mais detalhado e com textura) -->
+  <path d="M 100 25 
+           L 65 100 
+           L 88 100 
+           L 100 175 
+           L 135 100 
+           L 112 100 
+           Z" 
+        fill="url(#lightningGradient)" 
+        stroke="#E6820A" 
+        stroke-width="1.5"
+        filter="url(#roughness)"/>
+  
+  <!-- Raios secund�rios (mais vis�veis, estilo outline) -->
+  <path d="M 100 35 
+           L 72 98 
+           L 85 98 
+           L 100 165 
+           L 128 98 
+           L 115 98 
+           Z" 
+        fill="none" 
+        stroke="#F7931A" 
+        stroke-width="2" 
+        opacity="0.4"
+        stroke-linejoin="round"/>
+  
+  <path d="M 100 45 
+           L 78 96 
+           L 87 96 
+           L 100 155 
+           L 122 96 
+           L 113 96 
+           Z" 
+        fill="none" 
+        stroke="#FFA64D" 
+        stroke-width="1.5" 
+        opacity="0.3"
+        stroke-linejoin="round"/>
+</svg>
