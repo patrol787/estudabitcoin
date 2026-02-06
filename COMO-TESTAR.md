@@ -60,3 +60,13 @@ O jogo corre **no seu próprio servidor**, como quando o testaste sozinho, para 
 3. No browser abre **http://localhost:3000** → **Joga** → **Jogar Bitcoin Quiz**. O jogo abre numa nova aba em http://localhost:3001 e funciona como quando o testaste no Firefox.
 
 **Resumo:** dois servidores (site na 3000, jogo na 3001). O botão "Jogar" em localhost abre o jogo na porta 3001.
+
+---
+
+## Atualizar o jogo no site (depois de alterações no Bitcoin Quizz)
+
+As melhorias que fizeres no projeto **Bitcoin Quizz** **só aparecem no site** depois de atualizares a pasta **jogo/**:
+
+1. Na pasta **website estudabictoin.com**, faz duplo-clique em **`copy-game.sh`** (ou no Terminal: `./copy-game.sh`).
+2. O script faz o build do Bitcoin Quizz e copia tudo para **jogo/**.
+3. No browser, faz **recarregar forçado** na página do jogo: **Cmd+Shift+R** (Mac) ou **Ctrl+Shift+R** (Windows), para evitar cache antigo.

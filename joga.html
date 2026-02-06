@@ -57,12 +57,7 @@
           toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
         });
       }
-      // Em desenvolvimento local: o thumbnail abre o jogo em :3001; em produção abre jogo/index.html
-      var thumbLink = document.getElementById('game-thumbnail-link');
-      var isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-      if (thumbLink && isLocal) {
-        thumbLink.href = 'http://' + window.location.hostname + ':3001';
-      }
+      // O jogo abre sempre a partir da pasta jogo/ do site (localhost:3000/jogo/ ou em produção)
     })();
   </script>
 </body>

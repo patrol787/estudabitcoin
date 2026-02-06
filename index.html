@@ -72,18 +72,42 @@
       // Contador em tempo real do bloco Bitcoin (~10 min)
       var el = document.getElementById('live-block-number');
       var UPDATE_MS = 10 * 60 * 1000;
+      var FETCH_TIMEOUT_MS = 8000;
       var apis = [
-        'https://mempool.space/api/blocks/tip',
-        'https://blockstream.info/api/blocks/tip'
+        'https://blockstream.info/api/blocks/tip',
+        'https://mempool.space/api/v1/blocks/tip/height'
       ];
       function setHeight(height) {
         if (el && typeof height === 'number') el.textContent = '#' + height.toLocaleString('pt-PT');
         else if (el) el.textContent = '—';
       }
+      function parseHeight(url, data) {
+        if (url.indexOf('blockstream') !== -1) {
+          var b = Array.isArray(data) ? data[0] : data;
+          return b && (b.height != null) ? Number(b.height) : NaN;
+        }
+        if (url.indexOf('mempool') !== -1) {
+          if (typeof data === 'number') return data;
+          if (typeof data === 'string') { var n = parseInt(data, 10); return isNaN(n) ? NaN : n; }
+          return (data && data.height != null) ? Number(data.height) : NaN;
+        }
+        return NaN;
+      }
+      function fetchWithTimeout(url) {
+        var ctrl = new AbortController();
+        var t = setTimeout(function() { ctrl.abort(); }, FETCH_TIMEOUT_MS);
+        return fetch(url, { signal: ctrl.signal }).then(function(r) {
+          clearTimeout(t);
+          var ct = (r.headers.get('content-type') || '').toLowerCase();
+          if (ct.indexOf('json') !== -1) return r.json();
+          return r.text();
+        });
+      }
       function tryNext(i) {
         if (i >= apis.length) { setHeight(null); return; }
-        fetch(apis[i]).then(function(r) { return r.json(); }).then(function(d) {
-          var h = d && (d.height != null) ? Number(d.height) : NaN;
+        var url = apis[i];
+        fetchWithTimeout(url).then(function(d) {
+          var h = parseHeight(url, d);
           if (!isNaN(h)) setHeight(h); else tryNext(i + 1);
         }).catch(function() { tryNext(i + 1); });
       }
