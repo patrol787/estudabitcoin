@@ -1,0 +1,68 @@
+================================================================================
+  PROCEDIMENTO: Atualizar o jogo no site quando alteras o Bitcoin Quiz
+================================================================================
+
+O jogo que aparece no site está na pasta "jogo" do projeto do website. Essa
+pasta é uma CÓPIA do build do teu projeto Bitcoin Quizz. Por isso, sempre que
+alteras o jogo no Bitcoin Quizz, tens de gerar um novo build e copiá-lo para
+a pasta "jogo" do site.
+
+--------------------------------------------------------------------------------
+PASSO A PASSO
+--------------------------------------------------------------------------------
+
+1. Guardar as alterações no projeto do jogo
+   • Abre o projeto Bitcoin Quizz (pasta: Documents/Bitcoin Quizz).
+   • Grava todos os ficheiros (Cmd+S ou File → Save All).
+
+2. Correr o script copy-game.sh na pasta do site
+   • Abre a pasta do website no Finder:
+     "website estudabictoin.com"
+     (em ProtonDrive: Bitcoin → website estudabictoin.com)
+   • Faz duplo-clique em:  copy-game.sh
+   • Na primeira vez: botão direito → Abrir → Abrir.
+   • O script vai:
+     - Limpar cache e a pasta dist do Bitcoin Quizz
+     - Fazer o build do jogo (npm run build)
+     - Copiar o conteúdo da pasta dist para a pasta jogo do site
+   • Quando aparecer "✓ Jogo atualizado em jogo/" está feito.
+
+3. Ver as alterações no browser
+   • Abre o site (por exemplo com start-server.command, depois localhost:3000).
+   • Vai a Joga → clica no Bitcoin Quiz para abrir o jogo.
+   • Faz refresh forçado para não ver cache antigo:  Cmd+Shift+R  (Mac)
+     ou  Ctrl+Shift+R  (Windows).
+
+4. (Opcional) Atualizar o site no GitHub
+   • No Terminal, na pasta do website:
+     cd "/caminho/para/website estudabictoin.com"
+     git add .
+     git commit -m "Atualizar jogo"
+     git push origin main
+
+--------------------------------------------------------------------------------
+RESUMO RÁPIDO
+--------------------------------------------------------------------------------
+
+   Gravar ficheiros no Bitcoin Quizz
+        ↓
+   Duplo-clique em copy-game.sh (na pasta do site)
+        ↓
+   Cmd+Shift+R na página do jogo no browser
+
+--------------------------------------------------------------------------------
+NOTAS
+--------------------------------------------------------------------------------
+
+• O script copy-game.sh usa a pasta do jogo em:
+  /Users/pedrofrazao/Documents/Bitcoin Quizz
+  Se o teu projeto estiver noutra pasta, edita o copy-game.sh ou define
+  BITCOIN_QUIZZ_DIR antes de o correr.
+
+• Para testar o site em local: só precisas do start-server.command.
+  NÃO precisas do start-game.command (esse é para desenvolvimento do jogo).
+
+• O link do jogo no site abre sempre a partir da pasta jogo/ (mesmo servidor),
+  não usa a porta 3001.
+
+================================================================================
