@@ -269,6 +269,35 @@ main {
   margin: 0 auto 1.5rem;
 }
 
+.novidade-block {
+  margin: 1rem 0 0;
+  font-size: 1rem;
+}
+
+.novidade-label {
+  color: var(--text-secondary);
+  margin-right: 0.35em;
+}
+
+.novidade-link {
+  color: var(--bitcoin-orange);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.novidade-link:hover {
+  text-decoration: underline;
+}
+
+@keyframes novidade-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.novidade-blink {
+  animation: novidade-blink 1.5s ease-in-out infinite;
+}
+
 /* ----- Sections ----- */
 .section {
   margin-bottom: 4rem;
@@ -586,6 +615,36 @@ a.game-thumbnail-wrap:focus .game-thumbnail {
 .recursos-layout {
   display: grid;
   gap: 2.5rem;
+}
+
+.recursos-banner {
+  display: block;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, rgba(247, 147, 26, 0.15) 0%, rgba(247, 147, 26, 0.05) 100%);
+  border: 1px solid rgba(247, 147, 26, 0.4);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.recursos-banner:hover {
+  border-color: var(--bitcoin-orange);
+  box-shadow: 0 4px 24px rgba(247, 147, 26, 0.2);
+}
+
+.recursos-banner-title {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--bitcoin-orange);
+  margin-bottom: 0.25rem;
+}
+
+.recursos-banner-desc {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 .recursos-category {
