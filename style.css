@@ -426,6 +426,35 @@ main {
   background: #0d0d0d;
 }
 
+.card-image.rumble-thumb {
+  padding: 0;
+  background: #0d0d0d;
+  overflow: hidden;
+}
+
+.card-image.rumble-thumb img {
+  display: block;
+}
+
+.card-image.rumble-thumb .card-badge-rumble {
+  z-index: 1;
+}
+
+.card-badge-rumble {
+  background: #85c742;
+  color: #0d0d0d;
+}
+
+.btn-rumble {
+  background: #85c742;
+  color: #0d0d0d;
+}
+
+.btn-rumble:hover {
+  background: #9ad652;
+  color: #0d0d0d;
+}
+
 .card-badge {
   position: absolute;
   top: 0.75rem;
