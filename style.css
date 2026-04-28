@@ -646,6 +646,36 @@ a.game-thumbnail-wrap:focus .game-thumbnail {
   gap: 2.5rem;
 }
 
+.recursos-libraries {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .recursos-libraries {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+  }
+}
+
+.recursos-library-intro {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: -0.25rem 0 1rem;
+}
+
+.recursos-library-intro a {
+  color: var(--bitcoin-orange);
+  font-weight: 500;
+}
+
+.recursos-library-intro a:hover {
+  text-decoration: underline;
+}
+
 .recursos-banner {
   display: block;
   padding: 1.5rem 2rem;
