@@ -746,6 +746,345 @@ a.game-thumbnail-wrap:focus .game-thumbnail {
   color: var(--text-muted);
 }
 
+/* ----- Simulador juro composto + DCA (simulador/dca.html) ----- */
+.compound-dca-section {
+  margin-bottom: 2.5rem;
+}
+
+.compound-dca-card {
+  background: var(--charcoal-light);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.25rem;
+}
+
+@media (min-width: 600px) {
+  .compound-dca-card {
+    padding: 1.75rem 2rem;
+  }
+}
+
+.compound-dca-heading.section-title {
+  margin-bottom: 0.75rem;
+}
+
+.compound-dca-lead {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0 0 1.5rem;
+  max-width: 52rem;
+}
+
+.compound-dca-controls {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .compound-dca-controls {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .compound-dca-field--span {
+    grid-column: 1 / -1;
+  }
+}
+
+.compound-dca-field label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.compound-dca-opt {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.compound-dca-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.compound-dca-field input[type="number"] {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.85rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: var(--charcoal-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.compound-dca-field input[type="number"]:focus {
+  outline: none;
+  border-color: rgba(247, 147, 26, 0.55);
+  box-shadow: 0 0 0 3px var(--glow-orange);
+}
+
+.compound-dca-currency {
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--bitcoin-orange);
+}
+
+.compound-dca-years-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.compound-dca-years-head label {
+  margin-bottom: 0;
+}
+
+.compound-dca-years-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--bitcoin-orange);
+}
+
+.compound-dca-field input[type="range"] {
+  width: 100%;
+  height: 8px;
+  margin: 0.35rem 0 0.85rem;
+  border-radius: 4px;
+  background: var(--charcoal-muted);
+  accent-color: var(--bitcoin-orange);
+  cursor: pointer;
+}
+
+.compound-dca-years-num {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.compound-dca-years-num input[type="number"] {
+  width: 5rem;
+  padding: 0.5rem 0.65rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  background: var(--charcoal-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+}
+
+.compound-dca-years-num input[type="number"]:focus {
+  outline: none;
+  border-color: rgba(247, 147, 26, 0.55);
+  box-shadow: 0 0 0 3px var(--glow-orange);
+}
+
+.compound-dca-years-suffix {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.compound-dca-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.compound-dca-subtitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.35rem;
+}
+
+.compound-dca-chart-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.compound-dca-chart-block {
+  margin-bottom: 2rem;
+}
+
+.compound-dca-chart-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 260px;
+  height: clamp(260px, 42vw, 380px);
+  padding: 0.5rem;
+  background: var(--charcoal-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+}
+
+.compound-dca-premissas-block {
+  margin-bottom: 2rem;
+}
+
+.compound-dca-premissas-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+  line-height: 1.45;
+}
+
+.compound-dca-premissas-bitcoin-note {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  background: rgba(247, 147, 26, 0.06);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--bitcoin-orange);
+}
+
+.compound-dca-premissas-bitcoin-note strong {
+  color: var(--bitcoin-orange);
+}
+
+.compound-dca-premissas-scroll,
+.compound-dca-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  background: var(--charcoal-muted);
+}
+
+.compound-dca-premissas-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.compound-dca-premissas-table thead th,
+.compound-dca-table thead th {
+  text-align: left;
+  padding: 0.65rem 0.85rem;
+  background: rgba(247, 147, 26, 0.08);
+  color: var(--text-secondary);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.compound-dca-premissas-table thead th:nth-child(2),
+.compound-dca-premissas-table thead th:nth-child(3),
+.compound-dca-table thead th:not(:first-child) {
+  text-align: right;
+}
+
+.compound-dca-premissas-table tbody th {
+  text-align: left;
+  padding: 0.6rem 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.compound-dca-premissas-table tbody td {
+  padding: 0.6rem 0.85rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.compound-dca-premissas-table tbody tr:last-child th,
+.compound-dca-premissas-table tbody tr:last-child td,
+.compound-dca-table tbody tr:last-child th,
+.compound-dca-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.compound-dca-premissas-table tbody tr:hover th,
+.compound-dca-premissas-table tbody tr:hover td,
+.compound-dca-table tbody tr:hover th,
+.compound-dca-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.compound-dca-premissas-table tbody td strong {
+  color: var(--bitcoin-orange);
+}
+
+.compound-dca-table-block {
+  margin-bottom: 0.5rem;
+}
+
+.compound-dca-table-scroll {
+  margin-top: 0.75rem;
+}
+
+.compound-dca-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.compound-dca-table tbody th {
+  text-align: left;
+  padding: 0.6rem 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  max-width: 14rem;
+}
+
+.compound-dca-table tbody td {
+  text-align: right;
+  padding: 0.6rem 0.85rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.compound-dca-conclusion {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 2rem 0 0;
+  padding: 1.25rem 1.35rem;
+  background: rgba(247, 147, 26, 0.06);
+  border: 1px solid rgba(247, 147, 26, 0.22);
+  border-radius: var(--radius);
+}
+
+.compound-dca-conclusion strong {
+  color: var(--bitcoin-orange);
+}
+
+.compound-dca-disclaimer {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 1.75rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.compound-dca-disclaimer strong {
+  color: var(--bitcoin-orange);
+}
+
 /* ----- Footer ----- */
 .site-footer {
   margin-top: auto;
