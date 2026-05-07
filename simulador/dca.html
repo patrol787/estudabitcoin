@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Simulador de juro composto com DCA e capitalização mensal. Premissas ilustrativas (conservadoras por ativo; Bitcoin a 30 %).">
-  <title>Simulador DCA | Estuda Bitcoin</title>
+  <meta name="description" content="Simulador de Juro Composto com DCA e capitalização mensal. Premissas ilustrativas (conservadoras por ativo; Bitcoin a 30 %).">
+  <title>Simulador de Juro Composto com DCA | Estuda Bitcoin</title>
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js" defer crossorigin="anonymous"></script>
 </head>
@@ -31,7 +31,7 @@
   <main id="main" role="main">
     <section class="section compound-dca-section" aria-labelledby="compound-dca-heading">
       <div class="compound-dca-card">
-        <h1 id="compound-dca-heading" class="section-title compound-dca-heading">Simulador de juro composto com DCA</h1>
+        <h1 id="compound-dca-heading" class="section-title compound-dca-heading">Simulador de Juro Composto com DCA</h1>
         <p class="compound-dca-lead">Compara um investimento inicial opcional com contribuições mensais fixas (DCA) ao longo do tempo. Para cada ativo (exceto Bitcoin) usa-se o <strong>valor mais conservador</strong> do intervalo da tabela de premissas; para Bitcoin aplica-se uma premissa própria — ver nota abaixo dessa tabela. Rendimentos anuais implícitos com <strong>capitalização mensal</strong> (taxa mensal equivalente ao ano).</p>
 
         <div class="compound-dca-controls" role="group" aria-label="Parâmetros da simulação">
@@ -62,11 +62,30 @@
             </div>
             <p id="dca-years-help" class="compound-dca-hint">Entre 1 e 40 anos. Ajusta com o cursor ou escreve o valor.</p>
           </div>
+          <div class="compound-dca-field compound-dca-field--span">
+            <label for="dca-custom-rate">Taxa personalizada (% ao ano)</label>
+            <div class="compound-dca-input-row">
+              <input type="text" id="dca-custom-rate" class="compound-dca-rate-input" inputmode="decimal" placeholder="ex.: 12,5" autocomplete="off" aria-describedby="dca-custom-rate-hint dca-custom-rate-error" />
+              <span class="compound-dca-currency compound-dca-currency--muted" aria-hidden="true">%</span>
+            </div>
+            <p id="dca-custom-rate-hint" class="compound-dca-hint">Opcional. Entre 0&nbsp;% e 200&nbsp;% ao ano. Vazio ou zero omite este cenário na comparação.</p>
+            <p id="dca-custom-rate-error" class="compound-dca-field-error" role="alert" hidden></p>
+          </div>
         </div>
 
         <div class="compound-dca-chart-block">
-          <h2 class="compound-dca-subtitle">Crescimento ao longo do tempo</h2>
-          <p class="compound-dca-chart-note">Curvas ao <strong>final de cada ano</strong> (mesmo critério para todos os cenários). Percentagens conforme a coluna «Usado na simulação» na tabela de premissas.</p>
+          <div class="compound-dca-chart-head">
+            <h2 class="compound-dca-subtitle compound-dca-chart-title">Crescimento ao longo do tempo</h2>
+            <div class="compound-dca-chart-scale" role="group" aria-label="Escala do eixo vertical" aria-describedby="dca-chart-scale-help">
+              <button type="button" id="dca-scale-linear" class="compound-dca-scale-btn is-active" aria-pressed="true">Linear</button>
+              <button type="button" id="dca-scale-log" class="compound-dca-scale-btn" aria-pressed="false">Log</button>
+            </div>
+          </div>
+          <div class="compound-dca-chart-scale-help" id="dca-chart-scale-help">
+            <p><strong>Linear:</strong> mostra valores absolutos. Útil para ver quanto vale cada investimento.</p>
+            <p><strong>Logarítmica:</strong> mostra o crescimento relativo. Útil para comparar todos os ativos em simultâneo.</p>
+          </div>
+          <p class="compound-dca-chart-note">Curvas ao <strong>final de cada ano</strong> (mesmo critério para todos os cenários). Percentagens conforme a coluna «Usado na simulação» na tabela de premissas; o cenário <strong>Personalizado</strong> usa a taxa que indicares acima.</p>
           <div class="compound-dca-chart-wrap">
             <canvas id="compound-dca-chart" width="800" height="360" aria-label="Gráfico de linhas com o valor acumulado por cenário ao longo dos anos"></canvas>
           </div>
@@ -159,11 +178,11 @@
 
   <script>
     (function() {
-      var toggle = document.querySelector('.nav-toggle');
-      var nav = document.querySelector('.nav-list');
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.querySelector('.nav-list');
       if (toggle && nav) {
         toggle.addEventListener('click', function() {
-          var open = nav.classList.toggle('is-open');
+          const open = nav.classList.toggle('is-open');
           toggle.setAttribute('aria-expanded', open);
           toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
         });
@@ -173,27 +192,51 @@
     window.addEventListener('load', function() {
       if (typeof Chart === 'undefined') return;
 
-      var YEARS_MIN = 1;
-      var YEARS_MAX = 40;
+      const YEARS_MIN = 1;
+      const YEARS_MAX = 40;
+      const CUSTOM_RATE_MAX_PCT = 200;
+      const CUSTOM_LINE_COLOR = '#e4e4ea';
 
-      var canvas = document.getElementById('compound-dca-chart');
-      var tbody = document.getElementById('compound-dca-tbody');
-      var initialEl = document.getElementById('dca-initial');
-      var monthlyEl = document.getElementById('dca-monthly');
-      var yearsNumEl = document.getElementById('dca-years-number');
-      var rangeEl = document.getElementById('dca-years-range');
-      var outEl = document.getElementById('dca-years-out');
+      const canvas = document.getElementById('compound-dca-chart');
+      const tbody = document.getElementById('compound-dca-tbody');
+      const initialEl = document.getElementById('dca-initial');
+      const monthlyEl = document.getElementById('dca-monthly');
+      const yearsNumEl = document.getElementById('dca-years-number');
+      const rangeEl = document.getElementById('dca-years-range');
+      const outEl = document.getElementById('dca-years-out');
+      const btnScaleLinear = document.getElementById('dca-scale-linear');
+      const btnScaleLog = document.getElementById('dca-scale-log');
+      const customRateEl = document.getElementById('dca-custom-rate');
+      const customRateErrEl = document.getElementById('dca-custom-rate-error');
 
-      if (!canvas || !tbody || !initialEl || !monthlyEl || !yearsNumEl) return;
+      if (
+        !canvas ||
+        !tbody ||
+        !initialEl ||
+        !monthlyEl ||
+        !yearsNumEl ||
+        !btnScaleLinear ||
+        !btnScaleLog ||
+        !customRateEl ||
+        !customRateErrEl
+      ) {
+        return;
+      }
 
-      var ctx = canvas.getContext('2d');
-      var chartInstance = null;
-      var mqWide = window.matchMedia('(min-width: 700px)');
+      /* --- Inicialização: canvas, estado do gráfico, formatadores --- */
 
-      Chart.defaults.font.family = 'Inter, Segoe UI, system-ui, -apple-system, sans-serif';
+      const ctx = canvas.getContext('2d');
+      const mqWide = window.matchMedia('(min-width: 700px)');
+      const chartCache = { labels: null, datasets: null, totalInvCommon: 0 };
+
+      let chartInstance = null;
+      let yScaleMode = 'linear';
+
+      Chart.defaults.font.family =
+        'Inter, Segoe UI, system-ui, -apple-system, sans-serif';
       Chart.defaults.color = '#b0b0b8';
 
-      var vehicles = [
+      const vehicles = [
         { label: 'Depósitos a prazo — Portugal (1 % / ano)', rate: 0.01, color: '#91aec9' },
         { label: 'Certificados de Aforro (2,5 % / ano)', rate: 0.025, color: '#56b4c9' },
         { label: 'PPR — média mercado (1,5 % / ano)', rate: 0.015, color: '#5ec9be' },
@@ -203,39 +246,55 @@
         { label: 'Bitcoin (30 % / ano)', rate: 0.30, color: '#f7931a' }
       ];
 
-      var eurFmt = new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR' });
-      var pctFmt = new Intl.NumberFormat('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      var compactNumFmt = new Intl.NumberFormat('pt-PT', { notation: 'compact', compactDisplay: 'short', maximumFractionDigits: 1 });
+      const eurFmt = new Intl.NumberFormat('pt-PT', {
+        style: 'currency',
+        currency: 'EUR'
+      });
+      const pctFmt = new Intl.NumberFormat('pt-PT', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      const pctLabelFmt = new Intl.NumberFormat('pt-PT', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      });
+      const compactNumFmt = new Intl.NumberFormat('pt-PT', {
+        notation: 'compact',
+        compactDisplay: 'short',
+        maximumFractionDigits: 1
+      });
+
+      /* --- Cálculo e dados --- */
 
       function monthlyRate(annual) {
         return Math.pow(1 + annual, 1 / 12) - 1;
       }
 
       function simulate(initial, monthly, years, annualRate) {
-        var months = Math.round(Math.max(0, years) * 12);
-        var rm = monthlyRate(annualRate);
-        var balance = Math.max(0, initial);
-        var series = [{ month: 0, value: balance }];
-        for (var m = 1; m <= months; m++) {
+        const months = Math.round(Math.max(0, years) * 12);
+        const rm = monthlyRate(annualRate);
+        let balance = Math.max(0, initial);
+        const series = [{ month: 0, value: balance }];
+        for (let m = 1; m <= months; m++) {
           balance = balance * (1 + rm) + monthly;
           series.push({ month: m, value: balance });
         }
-        var totalInvested = Math.max(0, initial) + monthly * months;
+        const totalInvested = Math.max(0, initial) + monthly * months;
         return { final: balance, totalInvested: totalInvested, series: series };
       }
 
       function yearlyPoints(series, years) {
-        var pts = [];
-        var len = series.length;
-        for (var y = 0; y <= years; y++) {
+        const pts = [];
+        const len = series.length;
+        for (let y = 0; y <= years; y++) {
           pts.push(series[Math.min(y * 12, len - 1)].value);
         }
         return pts;
       }
 
       function parseMoney(el) {
-        var v = parseFloat(String(el.value).replace(',', '.'));
-        return isFinite(v) ? Math.max(0, v) : 0;
+        const v = parseFloat(String(el.value).replace(',', '.'));
+        return Number.isFinite(v) ? Math.max(0, v) : 0;
       }
 
       function pctDisplay(totalInv, finalVal) {
@@ -243,65 +302,111 @@
         return pctFmt.format((finalVal - totalInv) / totalInv * 100) + '\u00A0%';
       }
 
+      function customVehicleLabel(ratePct) {
+        return 'Personalizado (' + pctLabelFmt.format(ratePct) + '\u00A0% / ano)';
+      }
+
+      function parseCustomAnnualRate() {
+        const trimmed = String(customRateEl.value).trim();
+        if (trimmed === '') {
+          customRateErrEl.textContent = '';
+          customRateErrEl.hidden = true;
+          customRateEl.setAttribute('aria-invalid', 'false');
+          return { include: false };
+        }
+        const normalized = trimmed.replace(/\s/g, '').replace(',', '.');
+        const num = parseFloat(normalized);
+        if (!Number.isFinite(num)) {
+          customRateErrEl.textContent = 'Introduz um número válido.';
+          customRateErrEl.hidden = false;
+          customRateEl.setAttribute('aria-invalid', 'true');
+          return { include: false };
+        }
+        if (num < 0 || num > CUSTOM_RATE_MAX_PCT) {
+          customRateErrEl.textContent = 'Usa um valor entre 0 e 200.';
+          customRateErrEl.hidden = false;
+          customRateEl.setAttribute('aria-invalid', 'true');
+          return { include: false };
+        }
+        customRateErrEl.textContent = '';
+        customRateErrEl.hidden = true;
+        customRateEl.setAttribute('aria-invalid', 'false');
+        if (num <= 0) return { include: false };
+        return { include: true, ratePct: num, rateDecimal: num / 100 };
+      }
+
       function yearLabels(years) {
-        var labels = ['Início'];
-        for (var i = 1; i <= years; i++) labels.push('Ano ' + i);
+        const labels = ['Início'];
+        for (let i = 1; i <= years; i++) labels.push('Ano ' + i);
         return labels;
       }
 
-      function run() {
-        var initial = parseMoney(initialEl);
-        var monthly = parseMoney(monthlyEl);
-        var years = Math.min(YEARS_MAX, Math.max(YEARS_MIN, parseInt(yearsNumEl.value, 10) || YEARS_MIN));
+      /* --- Gráfico e tabela --- */
 
-        var labels = yearLabels(years);
-        var datasets = [];
-        var totalInvCommon = initial + monthly * (years * 12);
-
-        tbody.replaceChildren();
-
-        vehicles.forEach(function(v) {
-          var res = simulate(initial, monthly, years, v.rate);
-          var pts = yearlyPoints(res.series, years);
-          datasets.push({
-            label: v.label,
-            data: pts,
-            borderColor: v.color,
-            backgroundColor: 'transparent',
-            tension: 0.15,
-            pointRadius: 0,
-            pointHoverRadius: 4,
-            borderWidth: 2
-          });
-
-          var tr = document.createElement('tr');
-          var th = document.createElement('th');
-          th.setAttribute('scope', 'row');
-          th.textContent = v.label;
-
-          var tdInv = document.createElement('td');
-          tdInv.textContent = eurFmt.format(res.totalInvested);
-          var tdFin = document.createElement('td');
-          tdFin.textContent = eurFmt.format(res.final);
-          var tdRet = document.createElement('td');
-          tdRet.textContent = eurFmt.format(res.final - res.totalInvested);
-          var tdPct = document.createElement('td');
-          tdPct.textContent = pctDisplay(res.totalInvested, res.final);
-
-          tr.append(th, tdInv, tdFin, tdRet, tdPct);
-          tbody.appendChild(tr);
+      function datasetsForChart(datasets, logScale) {
+        if (!logScale) return datasets;
+        return datasets.map(function(ds) {
+          return {
+            label: ds.label,
+            data: ds.data.map(function(v) {
+              return typeof v === 'number' && v > 0 ? v : null;
+            }),
+            borderColor: ds.borderColor,
+            backgroundColor: ds.backgroundColor,
+            tension: ds.tension,
+            pointRadius: ds.pointRadius,
+            pointHoverRadius: ds.pointHoverRadius,
+            borderWidth: ds.borderWidth,
+            spanGaps: false
+          };
         });
+      }
 
+      function lineDataset(label, color, data) {
+        return {
+          label: label,
+          data: data,
+          borderColor: color,
+          backgroundColor: 'transparent',
+          tension: 0.15,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          borderWidth: 2
+        };
+      }
+
+      function appendComparisonRow(label, res) {
+        const tr = document.createElement('tr');
+        const th = document.createElement('th');
+        th.setAttribute('scope', 'row');
+        th.textContent = label;
+
+        const tdInv = document.createElement('td');
+        tdInv.textContent = eurFmt.format(res.totalInvested);
+        const tdFin = document.createElement('td');
+        tdFin.textContent = eurFmt.format(res.final);
+        const tdRet = document.createElement('td');
+        tdRet.textContent = eurFmt.format(res.final - res.totalInvested);
+        const tdPct = document.createElement('td');
+        tdPct.textContent = pctDisplay(res.totalInvested, res.final);
+
+        tr.append(th, tdInv, tdFin, tdRet, tdPct);
+        tbody.appendChild(tr);
+      }
+
+      function drawChart() {
         if (chartInstance) {
           chartInstance.destroy();
           chartInstance = null;
         }
+        if (!chartCache.labels || !chartCache.datasets || chartCache.totalInvCommon <= 0) return;
 
-        if (totalInvCommon <= 0) return;
+        const useLog = yScaleMode === 'log';
+        const chartData = datasetsForChart(chartCache.datasets, useLog);
 
         chartInstance = new Chart(ctx, {
           type: 'line',
-          data: { labels: labels, datasets: datasets },
+          data: { labels: chartCache.labels, datasets: chartData },
           options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -314,7 +419,11 @@
               tooltip: {
                 callbacks: {
                   label: function(ctx) {
-                    return ctx.dataset.label + ': ' + eurFmt.format(ctx.parsed.y);
+                    const y = ctx.raw;
+                    if (y == null || typeof y !== 'number' || !Number.isFinite(y)) {
+                      return ctx.dataset.label + ': —';
+                    }
+                    return ctx.dataset.label + ': ' + eurFmt.format(y);
                   }
                 }
               }
@@ -326,6 +435,7 @@
                 ticks: { color: '#b0b0b8', maxRotation: 45, minRotation: 0 }
               },
               y: {
+                type: useLog ? 'logarithmic' : 'linear',
                 title: { display: true, text: 'Valor', color: '#78788a' },
                 grid: { color: 'rgba(255,255,255,0.06)' },
                 ticks: {
@@ -341,20 +451,87 @@
       }
 
       function setYears(v) {
-        var n = Math.min(YEARS_MAX, Math.max(YEARS_MIN, parseInt(v, 10) || YEARS_MIN));
+        const n = Math.min(YEARS_MAX, Math.max(YEARS_MIN, parseInt(v, 10) || YEARS_MIN));
         if (rangeEl) {
-          rangeEl.value = n;
+          rangeEl.value = String(n);
           rangeEl.setAttribute('aria-valuenow', String(n));
         }
-        yearsNumEl.value = n;
+        yearsNumEl.value = String(n);
         if (outEl) outEl.textContent = n + ' ' + (n === 1 ? 'ano' : 'anos');
       }
 
-      if (rangeEl) rangeEl.addEventListener('input', function() { setYears(rangeEl.value); run(); });
-      yearsNumEl.addEventListener('input', function() { setYears(yearsNumEl.value); run(); });
+      function setYScaleMode(mode) {
+        if (yScaleMode === mode) return;
+        yScaleMode = mode;
+        const isLinear = mode === 'linear';
+        btnScaleLinear.classList.toggle('is-active', isLinear);
+        btnScaleLog.classList.toggle('is-active', !isLinear);
+        btnScaleLinear.setAttribute('aria-pressed', isLinear ? 'true' : 'false');
+        btnScaleLog.setAttribute('aria-pressed', isLinear ? 'false' : 'true');
+        drawChart();
+      }
+
+      /* --- Simulação completa (inputs → tabela, caches → gráfico) --- */
+
+      function run() {
+        const initial = parseMoney(initialEl);
+        const monthly = parseMoney(monthlyEl);
+        const years = Math.min(YEARS_MAX, Math.max(YEARS_MIN, parseInt(yearsNumEl.value, 10) || YEARS_MIN));
+        const custom = parseCustomAnnualRate();
+
+        const labels = yearLabels(years);
+        const datasets = [];
+        const totalInvCommon = initial + monthly * (years * 12);
+
+        tbody.replaceChildren();
+
+        vehicles.forEach(function(v) {
+          const res = simulate(initial, monthly, years, v.rate);
+          const pts = yearlyPoints(res.series, years);
+          datasets.push(lineDataset(v.label, v.color, pts));
+          appendComparisonRow(v.label, res);
+        });
+
+        if (custom.include && custom.rateDecimal != null) {
+          const resC = simulate(initial, monthly, years, custom.rateDecimal);
+          const ptsC = yearlyPoints(resC.series, years);
+          const labelC = customVehicleLabel(custom.ratePct);
+          datasets.push(lineDataset(labelC, CUSTOM_LINE_COLOR, ptsC));
+          appendComparisonRow(labelC, resC);
+        }
+
+        chartCache.labels = labels;
+        chartCache.datasets = datasets;
+        chartCache.totalInvCommon = totalInvCommon;
+
+        if (totalInvCommon <= 0) {
+          chartCache.labels = null;
+          chartCache.datasets = null;
+        }
+
+        drawChart();
+      }
+
+      /* --- Eventos --- */
+
+      btnScaleLinear.addEventListener('click', function() { setYScaleMode('linear'); });
+      btnScaleLog.addEventListener('click', function() { setYScaleMode('log'); });
+
+      if (rangeEl) {
+        rangeEl.addEventListener('input', function() {
+          setYears(rangeEl.value);
+          run();
+        });
+      }
+
+      yearsNumEl.addEventListener('input', function() {
+        setYears(yearsNumEl.value);
+        run();
+      });
 
       initialEl.addEventListener('input', run);
       monthlyEl.addEventListener('input', run);
+      customRateEl.addEventListener('input', run);
 
       setYears(yearsNumEl.value || String(YEARS_MIN));
       run();
