@@ -574,15 +574,25 @@ a.game-thumbnail-card:focus .game-thumbnail {
   opacity: 0.95;
 }
 .game-thumbnail-img-wrap {
-  display: block;
-  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 0.75rem;
 }
 .game-thumbnail {
-  max-width: 160px;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
-  margin: 0 auto;
   transition: opacity 0.2s ease;
+}
+/* Bitcoin Quiz: imagem mais larga — aumentar para igualar a massa visual do OpenMacro */
+.game-thumbnail-img-wrap--bitcoin .game-thumbnail {
+  width: 155%;
+  height: 155%;
+  max-width: none;
 }
 .game-thumbnail-title {
   display: block;
