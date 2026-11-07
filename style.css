@@ -541,11 +541,19 @@ main {
   padding: 2rem 0;
 }
 
+/* Grelha de thumbnails de jogos */
+.game-thumbnail-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
 /* Thumbnail do jogo: cartão clicável com imagem + nome do jogo */
 a.game-thumbnail-card {
   display: inline-block;
   text-decoration: none;
-  margin-bottom: 1.5rem;
   padding: 1.25rem 1.5rem;
   background: var(--charcoal-light);
   border: 1px solid var(--border-subtle);
@@ -553,6 +561,7 @@ a.game-thumbnail-card {
   color: var(--text-primary);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   max-width: 280px;
+  width: 100%;
 }
 a.game-thumbnail-card:hover,
 a.game-thumbnail-card:focus {
