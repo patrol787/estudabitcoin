@@ -1,28 +1,31 @@
 #!/bin/bash
 # Copia o build do Bitcoin Quizz para a pasta jogo/ do site.
 #
-# IMPORTANTE: Sempre que alterares o jogo no projeto "Bitcoin Quizz",
-# tens de correr ESTE script para as alterações aparecerem no site.
-# Executar a partir da pasta do site: ./copy-game.sh
+# Correr a partir da raiz do site:
+#   export BITCOIN_QUIZZ_DIR="/caminho/para/Bitcoin Quizz"
+#   ./docs/copy-game.sh
 #
-# Pasta do jogo: se o teu Bitcoin Quizz está noutro sítio, altera o caminho
-# em baixo ou define BITCOIN_QUIZZ_DIR antes de correr o script.
+# Se BITCOIN_QUIZZ_DIR não estiver definida, usa a pasta "Bitcoin Quizz"
+# imediatamente ao lado da pasta do site, quando existir.
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SITE_DIR="$(cd "$SCRIPT_DIR" && pwd)"
+if [ "$(basename "$SCRIPT_DIR")" = "docs" ]; then
+  SITE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+else
+  SITE_DIR="$SCRIPT_DIR"
+fi
 JOGO_DIR="$SITE_DIR/jogo"
 
-# Pasta do projeto Bitcoin Quizz (em Documents). Para outro caminho: export BITCOIN_QUIZZ_DIR="/caminho"
 if [ -n "$BITCOIN_QUIZZ_DIR" ]; then
   QUIZZ_DIR="$(cd "$BITCOIN_QUIZZ_DIR" && pwd)"
-elif [ -d "/Users/pedrofrazao/Documents/Bitcoin Quizz" ]; then
-  QUIZZ_DIR="/Users/pedrofrazao/Documents/Bitcoin Quizz"
+elif [ -d "$SITE_DIR/../Bitcoin Quizz" ]; then
+  QUIZZ_DIR="$(cd "$SITE_DIR/../Bitcoin Quizz" && pwd)"
 else
   echo "Erro: pasta Bitcoin Quizz não encontrada."
-  echo "  Esperada: /Users/pedrofrazao/Documents/Bitcoin Quizz"
-  echo "  Ou define: export BITCOIN_QUIZZ_DIR=\"/caminho/para/Bitcoin Quizz\""
+  echo "  Define a variável e volta a correr:"
+  echo "  export BITCOIN_QUIZZ_DIR=\"/caminho/para/Bitcoin Quizz\""
   exit 1
 fi
 
@@ -46,4 +49,6 @@ cp -R "$QUIZZ_DIR/dist"/* "$JOGO_DIR/"
 
 echo ""
 echo "✓ Jogo atualizado em jogo/"
+echo "Rever depois da cópia: lang=\"pt-PT\", favicon do site, textos em português europeu,"
+echo "e apagar jogo/images/bitcoin-coin.png se for duplicado de jogo/assets/."
 ls -la "$JOGO_DIR"

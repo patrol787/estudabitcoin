@@ -1,0 +1,84 @@
+================================================================================
+  PROCEDIMENTO: Atualizar o jogo no site quando alteras o Bitcoin Quiz
+================================================================================
+
+O jogo que aparece no site está na pasta "jogo". Essa pasta é uma CÓPIA do
+build do projeto Bitcoin Quizz. Sempre que alteras o jogo nesse projeto, tens
+de gerar um novo build e copiá-lo para a pasta "jogo" do site.
+
+Os scripts estão em docs/ e não são publicados (ver .vercelignore).
+
+--------------------------------------------------------------------------------
+PASSO A PASSO
+--------------------------------------------------------------------------------
+
+1. Guardar as alterações no projeto do jogo
+   • Abre o projeto Bitcoin Quizz.
+   • Grava todos os ficheiros.
+
+2. Indicar a pasta do projeto e correr docs/copy-game.sh
+   • No Terminal, na raiz do site (a pasta com index.html):
+
+     export BITCOIN_QUIZZ_DIR="/caminho/para/Bitcoin Quizz"
+     ./docs/copy-game.sh
+
+   • Se o projeto estiver na pasta "Bitcoin Quizz" ao lado da pasta do site,
+     o script encontra-o sem a variável.
+   • O script vai:
+     - Limpar a cache e a pasta dist do Bitcoin Quizz
+     - Fazer o build do jogo (npm run build)
+     - Copiar o conteúdo de dist para a pasta jogo do site
+   • Quando aparecer "Jogo atualizado em jogo/" está feito.
+
+3. Rever o que o site já ajustou em cima do build
+   Uma cópia nova pode repor detalhes que o site corrigiu:
+   • jogo/index.html deve ficar com lang="pt-PT", o favicon do site
+     (/favicon.ico e /favicon.svg) e o script /jogo/boot.js.
+   • Textos em português do Brasil no bundle (por exemplo "Você está nadando")
+     devem voltar a português europeu (tu, "estás a nadar").
+   • Se dist trouxer jogo/images/bitcoin-coin.png e o código usar
+     /jogo/assets/bitcoin-coin.png, apaga a cópia duplicada em images/.
+
+4. Ver as alterações no browser
+   • Abre o site (por exemplo com docs/start-server.command, depois localhost:3000).
+   • Vai a Joga → clica no Bitcoin Quiz.
+   • Faz refresh forçado para não ver cache antiga: Cmd+Shift+R (Mac)
+     ou Ctrl+Shift+R (Windows).
+   • Em produção, os ficheiros em jogo/assets/ ficam com cache longa.
+     Se o nome do ficheiro não mudar, limpa a cache desse URL na Vercel
+     depois do deploy.
+
+5. (Opcional) Publicar
+   • Na raiz do site:
+     git add jogo
+     git commit -m "Atualizar jogo"
+     git push
+
+--------------------------------------------------------------------------------
+RESUMO RÁPIDO
+--------------------------------------------------------------------------------
+
+   Gravar ficheiros no Bitcoin Quizz
+        ↓
+   BITCOIN_QUIZZ_DIR="..." ./docs/copy-game.sh
+        ↓
+   Repor lang pt-PT, favicon e textos em português europeu, se o build os perder
+        ↓
+   Cmd+Shift+R na página do jogo
+
+--------------------------------------------------------------------------------
+NOTAS
+--------------------------------------------------------------------------------
+
+• Não há caminho pessoal gravado no script. A pasta do jogo define-se com
+  BITCOIN_QUIZZ_DIR, ou fica implícita se existir "Bitcoin Quizz" ao lado
+  da pasta do site.
+
+• Para testar o site em local basta docs/start-server.command.
+  Não precisas de start-game.command (esse é para o servidor de desenvolvimento
+  do jogo, na porta 3001).
+
+• O link do jogo no site abre a pasta jogo/ no mesmo servidor.
+  Não usa a porta 3001.
+
+================================================================================

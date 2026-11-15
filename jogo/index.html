@@ -1,41 +1,34 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-PT">
   <head>
     <meta charset="UTF-8" />
     <base href="./" />
-    <link rel="icon" type="image/svg+xml" href="vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Bitcoin Quiz: jogo educativo em dez níveis sobre dinheiro, Bitcoin e soberania." />
+    <link rel="canonical" href="https://www.estudabitcoin.com/jogo/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Estuda Bitcoin" />
+    <meta property="og:locale" content="pt_PT" />
+    <meta property="og:title" content="Bitcoin Quiz | Estuda Bitcoin" />
+    <meta property="og:description" content="Bitcoin Quiz: jogo educativo em dez níveis sobre dinheiro, Bitcoin e soberania." />
+    <meta property="og:url" content="https://www.estudabitcoin.com/jogo/" />
+    <meta property="og:image" content="https://www.estudabitcoin.com/media/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Bitcoin Quiz | Estuda Bitcoin" />
+    <meta name="twitter:description" content="Bitcoin Quiz: jogo educativo em dez níveis sobre dinheiro, Bitcoin e soberania." />
+    <meta name="twitter:image" content="https://www.estudabitcoin.com/media/og.jpg" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Bitcoin Quiz</title>
+    <title>Bitcoin Quiz | Estuda Bitcoin</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/media/apple-touch-icon.png" />
+    <script src="/jogo/boot.js"></script>
     <script type="module" crossorigin src="/jogo/assets/game.js"></script>
-    <link rel="stylesheet" crossorigin href="/jogo/assets/index.css">
+    <link rel="stylesheet" crossorigin href="/jogo/assets/index.css" />
   </head>
   <body>
-    <div id="root"><p style="padding:2rem;text-align:center;color:#F7931A;font-family:'Courier New',Consolas,monospace;">A carregar o jogo…</p></div>
-    <script>
-      window.addEventListener('error', function(e) {
-        var root = document.getElementById('root');
-        if (!root || root.getAttribute('data-error')) return;
-        root.setAttribute('data-error', '1');
-        var msg = e.message || 'erro desconhecido';
-        var src = (e.target && (e.target.src || e.target.href)) || e.filename || '';
-        if (src) msg += ' — Ficheiro: ' + src;
-        root.innerHTML = '<p style="padding:2rem;color:#f44;font-family:'Courier New',Consolas,monospace;word-break:break-all;">Erro: ' + msg + '</p><p style="padding:0 2rem;color:#888;font-size:0.9em;">Certifica-te de que abriste o site através de um servidor (ex.: npx serve) e não abrindo o ficheiro diretamente.</p>';
-      }, true);
-      setTimeout(function() {
-        var root = document.getElementById('root');
-        if (root && !root.getAttribute('data-error') && root.children.length === 1 && root.querySelector('p')) {
-          root.innerHTML = '<p style="padding:2rem;text-align:center;color:#F7931A;font-family:'Courier New',Consolas,monospace;">Ainda a carregar…</p><p style="padding:0 2rem;text-align:center;color:#aaa;font-size:0.95em;">Na primeira vez o Vite pode demorar. Espera mais um pouco ou abre a consola (F12) para ver erros.</p>';
-        }
-      }, 15000);
-      setTimeout(function() {
-        var root = document.getElementById('root');
-        if (root && !root.getAttribute('data-error') && root.children.length === 1 && root.querySelector('p')) {
-          root.innerHTML = '<p style="padding:2rem;text-align:center;color:#f44;font-family:'Courier New',Consolas,monospace;">O jogo não carregou.</p><p style="padding:0 2rem;text-align:center;color:#aaa;font-size:0.95em;">Abre a consola (F12) e diz qual o erro a vermelho. Recarrega (F5) para tentar de novo.</p>';
-        }
-      }, 35000);
-    </script>
+    <div id="root"><p style="padding:2rem;text-align:center;color:#F7931A;font-family:Courier New,Consolas,monospace;">A carregar o jogo…</p></div>
   </body>
 </html>

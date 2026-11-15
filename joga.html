@@ -1,46 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT" data-page="joga">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jogo educativo sobre Bitcoin. Ficheiros do jogo na pasta /jogo.">
   <title>Joga | Estuda Bitcoin</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Jogos educativos sobre Bitcoin. O Bitcoin Quiz abre na pasta do jogo.">
+  <link rel="canonical" href="https://www.estudabitcoin.com/joga.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Estuda Bitcoin">
+  <meta property="og:locale" content="pt_PT">
+  <meta property="og:title" content="Joga | Estuda Bitcoin">
+  <meta property="og:description" content="Jogos educativos sobre Bitcoin. O Bitcoin Quiz abre na pasta do jogo.">
+  <meta property="og:url" content="https://www.estudabitcoin.com/joga.html">
+  <meta property="og:image" content="https://www.estudabitcoin.com/media/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Estuda Bitcoin — vista ilustrada de uma comunidade com um templo e o símbolo Bitcoin">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Joga | Estuda Bitcoin">
+  <meta name="twitter:description" content="Jogos educativos sobre Bitcoin. O Bitcoin Quiz abre na pasta do jogo.">
+  <meta name="twitter:image" content="https://www.estudabitcoin.com/media/og.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/media/apple-touch-icon.png">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Saltar para o conteúdo</a>
 
-  <header class="site-header" role="banner">
-    <div class="header-inner">
-      <a href="index.html" class="site-logo">Estuda<span>Bitcoin</span></a>
-      <button type="button" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-main">
-        <span aria-hidden="true">☰</span>
-      </button>
-      <nav id="nav-main" role="navigation" aria-label="Navegação principal">
-        <ul class="nav-list">
-          <li><a href="index.html">Início</a></li>
-          <li><a href="aprende.html">Aprende</a></li>
-          <li><a href="joga.html" aria-current="page">Joga</a></li>
-          <li><a href="recursos.html">Recursos</a></li>
-        </ul>
+  <div id="site-header">
+    <noscript>
+      <nav class="noscript-nav" aria-label="Navegação principal">
+        <a href="/">Início</a>
+        <a href="/aprende.html">Aprende</a>
+        <a href="/joga.html">Joga</a>
+        <a href="/recursos.html">Recursos</a>
       </nav>
-    </div>
-  </header>
+    </noscript>
+  </div>
+  <script src="/assets/chrome.js"></script>
 
   <main id="main" role="main">
     <section class="game-section" aria-labelledby="game-heading">
       <h1 id="game-heading">Jogos Educativos</h1>
       <div class="game-thumbnail-grid">
-        <a href="jogo/index.html" id="game-thumbnail-link" target="_blank" rel="noopener noreferrer" class="game-thumbnail-card" aria-label="Abrir Bitcoin Quiz numa nova janela">
+        <a href="/jogo/index.html" id="game-thumbnail-link" target="_blank" rel="noopener noreferrer" class="game-thumbnail-card" aria-label="Abrir Bitcoin Quiz numa nova janela">
           <span class="game-thumbnail-img-wrap game-thumbnail-img-wrap--bitcoin">
-            <img src="jogo/assets/bitcoin-coin.png" alt="" class="game-thumbnail">
+            <img src="/jogo/assets/bitcoin-coin.png" alt="" class="game-thumbnail">
           </span>
           <span class="game-thumbnail-title">Bitcoin Quiz</span>
           <span class="game-thumbnail-cta">Clica para abrir</span>
         </a>
         <a href="https://openmacro.org/pt/learn" target="_blank" rel="noopener noreferrer" class="game-thumbnail-card" aria-label="Abrir OpenMacro numa nova janela">
           <span class="game-thumbnail-img-wrap">
-            <img src="assets/openmacro-icon.svg" alt="" class="game-thumbnail">
+            <img src="/assets/openmacro-icon.svg" alt="" class="game-thumbnail">
           </span>
           <span class="game-thumbnail-title">OpenMacro</span>
           <span class="game-thumbnail-cta">Clica para abrir</span>
@@ -49,25 +62,6 @@
     </section>
   </main>
 
-  <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">
-      <p class="footer-disclaimer"><strong>Privacidade.</strong> Este site não utiliza cookies nem scripts de rastreio. O alojamento é fornecido pelo GitHub, sujeito à sua política de privacidade.</p>
-    </div>
-  </footer>
-
-  <script>
-    (function() {
-      var toggle = document.querySelector('.nav-toggle');
-      var nav = document.querySelector('.nav-list');
-      if (toggle && nav) {
-        toggle.addEventListener('click', function() {
-          var open = nav.classList.toggle('is-open');
-          toggle.setAttribute('aria-expanded', open);
-          toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-        });
-      }
-      // O jogo abre sempre a partir da pasta jogo/ do site (localhost:3000/jogo/ ou em produção)
-    })();
-  </script>
+  <div id="site-footer"></div>
 </body>
 </html>
