@@ -1,6 +1,18 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "estudabitcoin.vercel.app" }],
+      "destination": "https://www.estudabitcoin.com/",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "estudabitcoin.com" }],
+      "destination": "https://www.estudabitcoin.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "estudabitcoin.vercel.app" }],
       "destination": "https://www.estudabitcoin.com/:path*",
