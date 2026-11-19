@@ -493,6 +493,30 @@ main {
   z-index: 1;
 }
 
+/* Short vertical (9:16). A 16:9 cover crop would cut the gold chart or the −82%.
+   One column shows the 4:5 frame. Beside other cards it stays 16:9, contained,
+   so the row does not open a gap and the badge sits on the dark side margin. */
+.card-image.rumble-thumb.rumble-thumb-short {
+  aspect-ratio: 4 / 5;
+  padding: 2.6rem 0.75rem 0.75rem;
+}
+
+.card-image.rumble-thumb.rumble-thumb-short img {
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+@media (min-width: 640px) {
+  .card-image.rumble-thumb.rumble-thumb-short {
+    aspect-ratio: 16 / 9;
+    padding: 0;
+  }
+}
+
+.card-grid-start {
+  align-items: start;
+}
+
 .card-badge-rumble {
   background: #85c742;
   color: #0d0d0d;
